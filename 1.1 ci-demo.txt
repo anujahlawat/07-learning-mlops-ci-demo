@@ -106,6 +106,7 @@
 22. so, job complete ho gyi h ... and green tick aa gya h uss commit k liye ... 
 
 
+******************************************
 #now let's understand ki ci.yaml file m humne jo likha vo kya h ? 
 #google p padho yr iske bare m ya phir campusx k lecture se ... session 21 lecture ... 
 1. name --- name of our workflow 
@@ -152,4 +153,22 @@ abb m ek sath apne code ko linux ... windows ... mac p chalaunga ...
                       #and inn parallel jobs p aage ka saara kaam hoga ... 
             strategy:
                 matrix:
-                    os: [ubuntu-latest,windows-latest,macos-latest]                (matrix k ander aap kya krte ho ki ... os bolke ek option create kr skte ho ... os ki jagah hum kuch b likh skte h ... )
+                    os: [ubuntu-latest,windows-latest,macos-latest]  
+                  (matrix k ander aap kya krte ho ki ... os bolke ek option create kr skte ho ... os ki jagah hum kuch b likh skte h ... )
+
+4. git add --> commit --> push
+   go to github --> actions --> select ur commit --> vha dekho 3 different jobs show ho rhi h ... 
+
+
+5. now, abb m not only python 3.9 ... but python 3.10 k liye b ye sbb krna chahta hu ... 
+6. matrix:
+    os: [ubuntu-latest,windows-latest,macos-latest]  note:- os is a key and list m iski values h ... so it is key value pair 
+    version: ['3.9','3.10']
+
+    and python-versions: ${{matrix.version}}
+
+    now ... abb hamre pass 6 jobs ho gyi ... as har os and har version ka combination ek job hoga ... 
+    so, basically abb aap smjh pa rhe ho ... 
+7. git add --> commit --> push
+
+
