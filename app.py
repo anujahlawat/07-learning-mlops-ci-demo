@@ -1,16 +1,16 @@
 #hum ek calculator ka code likh rhe h ... 
-def add(a,b):
-    return a+b
+#def add(a,b):
+#    return a+b
 
 
 
 
-def sub(a,b):return a-b
+#def sub(a,b):return a-b
 
-result1 = add(4,5)
-result2 = sub(4,1)
+#result1 = add(4,5)
+#result2 = sub(4,1)
 
-print(result1, result2)
+#print(result1, result2)
 
 #now, iss code m koi problem nhi h ... run krke dekho ... 
 #python app.py 
@@ -26,3 +26,16 @@ print(result1, result2)
 #flake 8 aapko bta dega ... 
 
 #but hum ci pipeline k through krenge ... 
+
+
+def add(a, b):
+    return a + b
+
+
+def sub(a, b):
+    return a - b
+
+result1 = add(4, 5)
+result2 = sub(4, 1)
+
+print(result1, result2)
