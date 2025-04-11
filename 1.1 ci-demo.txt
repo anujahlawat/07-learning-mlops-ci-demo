@@ -27,6 +27,36 @@
     c. kya jobs aap execute krna chahte ho uss runner k upper ... 
     toh aapko sabse pehle ... apni ci file m ye 3 cheeje btani h ...
 13. go to ci.yaml file and code likho vha ... 
+
+    name: ci
+
+    on: push
+
+    jobs:
+    linting:
+        runs-on: ubuntu-latest
+
+        steps:
+        - name: code checkout
+            uses: actions/checkout@v3 #isse github ka repo aisetise copy paste ho jayega ... server/runner k upper
+        
+        - name: setup python 
+            uses: actions/setup-python@v2 
+            with:
+            python-version: '3.9' 
+
+        - name: install flake8 
+            run: |
+            python -m pip install --upgrade pip 
+            pip install flake8 
+
+        - name: run flake8 
+            run: |
+            flake8 app1.py       
+
+
+
+
     name: ci ... mere workflow ka naam h 
     on: push ... so, jaise hi meri main/kisi b branch m jaise hi koi push krega ... toh ye workflow trigger ho jayega 
     jobs: 
@@ -71,4 +101,55 @@
     app1.py:11:24: W292 no newline at end of file 
 
     1. line 8 col 1 k baad ek new line add kro ... 
-    2. line 11 and col24 k baad wk new line add kro ...  
+    2. line 11 and col24 k baad wk new line add kro ... 
+
+22. so, job complete ho gyi h ... and green tick aa gya h uss commit k liye ... 
+
+
+#now let's understand ki ci.yaml file m humne jo likha vo kya h ? 
+#google p padho yr iske bare m ya phir campusx k lecture se ... session 21 lecture ... 
+1. name --- name of our workflow 
+2. on --- push/pull request/schedule ... it specifies the events that trigger the workflow 
+3. jobs --- kya kaam krana h ... and aap multiple jobs kra skte ho 
+4. runs-on --- runner/server p konsa os chalega ... 
+5. steps --- each step can run : 1. script file
+                                 2. run shell cmd (like pip install python)
+                                 3. predefined actions (like setup python, code copy)
+       a) script/shell cmd :- run k through execute krenge
+       b) actions :- uses k through execute krenge 
+
+6. actions/checkout@v3 :- so aapko apna ci workflow execute krne k liye ... aapki repo ka code chahiye hota h ... 
+   and since aap ye puri cheej ek nyi machine p run kr rhe hote ho ... toh aapko vo code lana padhta h ... 
+   toh aapko yha vo code github k server se utha k apne ci runner/server p lana h ... so, uske liye hum iss predefined 
+   action ka use kr rhe h  ... 
+   github/actions ----> issse google kro and aapko saare actions dikh jayenge jo github walo n bnaye huae h 
+   
+   v3 means ... checkout ki repo ka filhal version 3 chal rha h 
+   so, ye 2 kaam kregi ... fetch and checkout ... 
+
+7. actions/setup-python@v2 :- pre-defined action h ye b ... isse python install hota h ... runner env m path variable set krta h ... dependecies ko 
+   cache kr leta h ... taki baar baar use ho toh jaldi se task ho jaye ... 
+
+
+
+
+**********************************************
+so, abhi humne simple workflow bnaya ... abhi hmara workflow 1 runner p chal rha tha ... 
+and vo runner 1 os p chal rha tha i.e. ubuntu ... 
+what is mujhe makesure krna h ki mera code jo h vo orr os p b chale ... 
+abb m ek sath apne code ko linux ... windows ... mac p chalaunga ... 
+
+1. ci.yaml ... isme abb hum edit and all krenge ... 
+2. hum ek job ki jagah multiple parallel job chalayenge ... 
+   aapka ek job chalega linux p, ek mac os p, ek windows p 
+3. yha let's write code ... 
+    jobs:
+        linting:
+            runs-on: ${{matrix.os}}
+                      #mera ci server automatically smjh jayega ki there are 3 possible combinations and vo har combination ko ek job manega ...
+                      #and har job ko vo parallely execute krega ... 
+                      #iss code k execution p 3 runners bnenge ... ek k upper ubuntu aayega ... ek k upper windows ... ek k upper macos ...
+                      #and inn parallel jobs p aage ka saara kaam hoga ... 
+            strategy:
+                matrix:
+                    os: [ubuntu-latest,windows-latest,macos-latest]                (matrix k ander aap kya krte ho ki ... os bolke ek option create kr skte ho ... os ki jagah hum kuch b likh skte h ... )
