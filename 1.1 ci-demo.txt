@@ -208,3 +208,16 @@ abb m ek sath apne code ko linux ... windows ... mac p chalaunga ...
 
 29. git push origin master 
 30. github --> actions --> 2 jobs h yha p ... 
+
+
+
+
+31. aap dono jobs i.e. linting and testing ko sequentially b execute kr skte ho ... 
+    aap chahoge ki pehle linting ho and thn testing ho ... 
+
+32. go to ci.yaml 
+    testing:
+        needs: linting     #testing tbhi execute hoga jbb linting hoga ... 
+        runs-on: ubuntu-latest 
+33. git add --> commit --> push 
+    github --> actions 
